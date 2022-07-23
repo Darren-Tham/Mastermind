@@ -10,22 +10,35 @@ const WHITE = '#f9f5ff'
 const BLACK = '#262626'
 
 export default class Colors extends Component {
+  constructor(props) {
+    super(props)
+  }
+
+  renderColorBalls = () => {
+    const COLORS = [[RED, ORANGE, YELLOW, GREEN], [BLUE, PURPLE, WHITE, BLACK]]
+    const rows = []
+
+    for (let i = 0; i < COLORS.length; i++) {
+      const colorBalls = []
+
+      for (let j = 0; j < COLORS[i].length; j++) {
+        colorBalls.push(<div key={i * COLORS.length + j} className='color ball' style={{ backgroundColor: COLORS[i][j] }} onClick={this.props.handleColorClick} />)
+      }
+
+      const row = <div key={i} className='colors-row'>
+        {colorBalls.map(ball => ball)}
+      </div>
+
+      rows.push(row)
+    }
+
+    return rows
+  }
 
   render = () => {
     return (
       <div className='colors-wrapper'>
-        <div className='colors-row'>
-          <div id='red' className='ball' style={{ backgroundColor: RED }} />
-          <div id='orange' className='ball' style={{ backgroundColor: ORANGE }} />
-          <div id='yellow' className='ball' style={{ backgroundColor: YELLOW }} />
-          <div id='green' className='ball' style={{ backgroundColor: GREEN }} />
-        </div>
-        <div className='colors-row'>
-          <div id='blue' className='ball' style={{ backgroundColor: BLUE }} />
-          <div id='purple' className='ball' style={{ backgroundColor: PURPLE }} />
-          <div id='white' className='ball' style={{ backgroundColor: WHITE }} />
-          <div id='black' className='ball' style={{ backgroundColor: BLACK }} />
-        </div>
+        {this.renderColorBalls()}
       </div>
     )
   }

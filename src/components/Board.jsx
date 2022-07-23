@@ -5,7 +5,8 @@ import MainBall from './MainBall'
 import CheckerBall from './CheckerBall'
 
 const GRAY = '#797d80'
-const LIGHT_GRAY = '#b8bcbf'
+const LIGHT_GRAY = '#989c9e'
+const LIGHTER_GRAY = '#b8bcbf'
 
 export default class Board extends Component {
   constructor(props) {
@@ -24,55 +25,69 @@ export default class Board extends Component {
     }
   }
 
-  handleClick = e => {
+  handleMainClick = e => {
     const id = parseInt(e.target.id)
     const mainBalls = this.state.mainBalls.slice()
-    const newRow = []
+    const currRow = mainBalls[this.state.currIdx]
+    const isClicked = currRow[id].props.isClicked
 
-    for (let i = 0; i < this.state.numOfBalls; i++) {
-      if (id === i) {
-        const currRow = mainBalls[this.state.currIdx]
-        const isClicked = currRow[id].props.isClicked
-        if (isClicked) {
-          newRow.push(this.createMainBall(i, GRAY, false, this.handleClick))
-        } else {
-          newRow.push(this.createMainBall(i, '#b59848', true, this.handleClick))
-        }
+    const newRow = currRow.map((ball, i) => {
+      const mainColor = ball.props.mainColor
+      if (id === i && !isClicked) {
+        return this.createMainBall(i, LIGHT_GRAY, mainColor, this.handleMainClick, true, true)
       } else {
-        newRow.push(this.createMainBall(i, GRAY, false, this.handleClick))
+        return this.createMainBall(i, mainColor, mainColor, this.handleMainClick, false, true)
       }
-    }
+    })
 
-  
     mainBalls[this.state.currIdx] = newRow
     this.setState({ mainBalls })
   }
 
-  createMainBall = (key, color, isClicked, handleClick) => <MainBall key={key} id={key} color={color} isClicked={isClicked} handleClick={handleClick} />
+  handleColorClick = e => {
+    const color = e.target.style.backgroundColor
+    const mainBalls = this.state.mainBalls.slice()
+    const currRow = mainBalls[this.state.currIdx]
+
+    currRow.forEach((ball, i) => {
+      if (ball.props.isClicked) {
+        currRow[i] = this.createMainBall(i, color, color, this.handleMainClick, false, true)
+      }
+    })
+
+    mainBalls[this.state.currIdx] = currRow
+    this.setState({ mainBalls })
+  }
+
+  createMainBall = (key, color, mainColor, handleClick, isClicked, isClickable) => <MainBall key={key} id={key} color={color} mainColor={mainColor} handleClick={handleClick} isClicked={isClicked} isClickable={isClickable} />
 
   createCheckerBall = (key, color) => <CheckerBall key={key} color={color} />
 
   setBalls = (numOfBalls, numOfRows, currIdx, isMainBalls) => {
     const balls = []
+
     for (let i = 0; i < numOfRows; i++) {
       const currBalls = []
+
       for (let j = 0; j < numOfBalls; j++) {
         if (isMainBalls) {
           if (i === currIdx) {
-            currBalls.push(this.createMainBall(j, GRAY, false, this.handleClick))
+            currBalls.push(this.createMainBall(j, GRAY, GRAY, this.handleMainClick, false, true))
           } else {
-            currBalls.push(this.createMainBall(j, LIGHT_GRAY, false, null))
+            currBalls.push(this.createMainBall(j, LIGHTER_GRAY, LIGHTER_GRAY, null, false, false))
           }
         } else {
           if (i === currIdx) {
             currBalls.push(this.createCheckerBall(j, GRAY))
           } else {
-            currBalls.push(this.createCheckerBall(j, LIGHT_GRAY))
+            currBalls.push(this.createCheckerBall(j, LIGHTER_GRAY))
           }
         }
       }
+
       balls.push(currBalls)
     }
+
     return balls
   }
 
@@ -88,7 +103,7 @@ export default class Board extends Component {
     return (
       <div className='board'>
         {this.renderRows().map(row => row)}
-        <Colors />
+        <Colors handleColorClick={this.handleColorClick} />
         <div className='buttons-wrapper'>
           <button>New Game</button>
           <button>Check</button>

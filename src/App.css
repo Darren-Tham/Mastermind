@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 :root {
@@ -37,6 +38,17 @@ body {
   height: var(--ball-size);
   border-radius: 50%;
   margin: var(--ball-margin);
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+}
+
+.color {
+  cursor: pointer;
 }
 
 .checker-ball {
