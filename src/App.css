@@ -1,0 +1,77 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --ball-size: 3.5vmin;
+  --ball-margin: 0.75vmin;
+  --gray: #81878c;
+  --bg-color: #ced3d9;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  background-color: plum;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  border: 0.5vmin solid var(--gray);
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--bg-color);
+  width: max-content;
+}
+
+.ball {
+  width: var(--ball-size);
+  height: var(--ball-size);
+  border-radius: 50%;
+  margin: var(--ball-margin);
+}
+
+.small-ball {
+  width: calc(var(--ball-size) / 2.5);
+  height: calc(var(--ball-size) / 2.5);
+  border-radius: 50%;
+  margin: 0 0.5vmin;
+}
+
+.checker {
+  height: calc(var(--ball-size) + var(--ball-margin) * 2);
+  display: grid;
+  place-items: center;
+  border-left: 0.2vmin solid var(--gray);
+}
+
+.colors-row {
+  width: max-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--gray);
+}
+
+.colors-wrapper {
+  width: 100%;
+  background-color: var(--bg-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.buttons-wrapper {
+  background-color: var(--bg-color);
+  display: flex;
+  justify-content: space-evenly;
+}
+
