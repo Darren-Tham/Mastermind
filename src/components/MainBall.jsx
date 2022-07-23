@@ -2,6 +2,6 @@ import React from 'react'
 
 export default function MainBall(props) {
   return (
-    <button className='ball' style={{ backgroundColor: props.color }}></button>
+    <div id={props.id} className='ball' style={{ backgroundColor: props.color }} onClick={props.handleClick} />
   )
 }

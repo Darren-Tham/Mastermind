@@ -1,8 +1,8 @@
-import Container from './components/Container'
+import Board from './components/Board'
 import './App.css'
 
 export default function App() {
   return (
-    <Container />
+    <Board />
   )
 }
