@@ -25,19 +25,26 @@ export default class Board extends Component {
   }
 
   handleClick = e => {
-    const id = e.target.id
+    const id = parseInt(e.target.id)
     const mainBalls = this.state.mainBalls.slice()
-    const currRow = mainBalls[this.state.currIdx]
     const newRow = []
-    const isClicked = currRow[id].props.isClicked
 
-    if (isClicked) {
-      currRow[id] = <MainBall key={id} id={id} color={GRAY} isClicked={false} handleClick={this.handleClick} />
-    } else {
-      currRow[id] = <MainBall key={id} id={id} color='#b59848' isClicked={true} handleClick={this.handleClick} />
+    for (let i = 0; i < this.state.numOfBalls; i++) {
+      if (id === i) {
+        const currRow = mainBalls[this.state.currIdx]
+        const isClicked = currRow[id].props.isClicked
+        if (isClicked) {
+          newRow.push(this.createMainBall(i, GRAY, false, this.handleClick))
+        } else {
+          newRow.push(this.createMainBall(i, '#b59848', true, this.handleClick))
+        }
+      } else {
+        newRow.push(this.createMainBall(i, GRAY, false, this.handleClick))
+      }
     }
 
-    mainBalls[this.state.currIdx] = currRow
+  
+    mainBalls[this.state.currIdx] = newRow
     this.setState({ mainBalls })
   }
 
