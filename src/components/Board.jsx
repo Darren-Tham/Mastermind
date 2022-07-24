@@ -21,15 +21,20 @@ class Board extends Component {
       rowLen,
       currIdx,
       allowDuplicates,
+      gameOver: false,
       mainBalls: this.setBalls(codeLen, rowLen, currIdx, true),
       checkerBalls: this.setBalls(codeLen, rowLen, currIdx, false),
       answerRow: this.setAnswer(codeLen, allowDuplicates),
     }
   }
 
+  // Create Methods
+
   createMainBall = (key, color, mainColor, handleClick, isClicked, isClickable) => <MainBall key={key} id={key} color={color} mainColor={mainColor} handleClick={handleClick} isClicked={isClicked} isClickable={isClickable} />
 
   createCheckerBall = (key, color) => <CheckerBall key={key} color={color} />
+
+  // Set Methods
 
   setBalls = (codeLen, rowLen, currIdx, isMainBalls) => {
     const balls = []
@@ -76,53 +81,68 @@ class Board extends Component {
     return answerRow
   }
 
-  updateRow = () => {    
+  // Update Methods
+
+  updateRow = (currIdx, gameOver) => {
     const mainBalls = this.state.mainBalls.slice()
-    const currIdx = this.state.currIdx
-    const nextIdx = currIdx - 1
     const currRow = mainBalls[currIdx]
-    const nextRow = []
     const n = this.state.codeLen
 
     for (let i = 0; i < n; i++) {
       const color = currRow[i].props.color
       currRow[i] = this.createMainBall(i, color, color, null, false, false)
-      nextRow.push(this.createMainBall(i, GRAY, GRAY, this.handleMainClick, false, true))
     }
 
     mainBalls[currIdx] = currRow
-    mainBalls[nextIdx] = nextRow
 
-    this.setState({ 
-      currIdx: nextIdx,
-      mainBalls,
-    })
+    if (gameOver) {
+      this.setState({ mainBalls })
+      return
+    }
+
+    if (currIdx >= 0) {
+      const nextRow = []
+      const nextIdx = currIdx - 1
+
+      for (let i = 0; i < n; i++) {
+        nextRow.push(this.createMainBall(i, GRAY, GRAY, this.handleMainClick, false, true))
+      }
+
+      mainBalls[nextIdx] = nextRow
+    }
+
+    this.setState({ mainBalls })
   }
 
-  updateChecker = () => {
+  updateChecker = currIdx => {
     const mainBalls = this.state.mainBalls.slice()
     const checkerBalls = this.state.checkerBalls.slice()
-    const currIdx = this.state.currIdx
-    const nextIdx = currIdx - 1
     const currRow = mainBalls[currIdx]
     const answerRow = this.state.answerRow.slice()
     const n = this.state.codeLen
     const newChecker = []
-    const nextChecker = []
 
     const currRowHashmap = {}
     const answerRowHashmap = {}
 
     let keyId = 0
+    let gameOver = true
     for (let i = 0; i < n; i++) {
       const currColor = currRow[i].props.mainColor
       const answerColor = answerRow[i].props.mainColor
       if (currColor === answerColor) {
         newChecker.push(this.createCheckerBall(keyId++, RED))
       } else {
+        gameOver = false
         currRowHashmap[currColor] = currRowHashmap[currColor] === undefined ? 1 : currRowHashmap[currColor] + 1
         answerRowHashmap[answerColor] = answerRowHashmap[answerColor] === undefined ? 1 : answerRowHashmap[answerColor] + 1
       }
+    }
+
+    if (gameOver) {
+      checkerBalls[currIdx] = newChecker
+      this.setState({ checkerBalls })
+      return true
     }
 
     for (const mapKey in currRowHashmap) {
@@ -138,14 +158,35 @@ class Board extends Component {
       newChecker.push(this.createCheckerBall(keyId++, GRAY))
     }
 
-    for (let i = 0; i < n; i++) {
-      nextChecker.push(this.createCheckerBall(i, GRAY))
+    checkerBalls[currIdx] = newChecker
+
+    if (currIdx >= 0) {
+      const nextIdx = currIdx - 1
+      const nextChecker = []
+
+      for (let i = 0; i < n; i++) {
+        nextChecker.push(this.createCheckerBall(i, GRAY))
+      }
+
+      checkerBalls[nextIdx] = nextChecker
     }
 
-    checkerBalls[currIdx] = newChecker
-    checkerBalls[nextIdx] = nextChecker
     this.setState({ checkerBalls })
+    return false
   }
+
+  revealAnswer = () => {
+    const answerRow = this.state.answerRow.slice().map((ball, key) => {
+      const color = ball.props.mainColor
+      return this.createMainBall(key, color, color, null, false, false)
+    })
+    this.setState({
+      answerRow,
+      gameOver: true
+    })
+  }
+
+  // Handlers
 
   handleMainClick = e => {
     const id = parseInt(e.target.id)
@@ -196,6 +237,7 @@ class Board extends Component {
       codeLen,
       currIdx,
       allowDuplicates,
+      gameOver: false,
       mainBalls: this.setBalls(codeLen, rowLen, currIdx, true),
       checkerBalls: this.setBalls(codeLen, rowLen, currIdx, false),
       answerRow: this.setAnswer(codeLen, allowDuplicates)
@@ -203,6 +245,8 @@ class Board extends Component {
   }
 
   handleCheck = _ => {
+    if (this.state.gameOver) return
+
     const mainBalls = this.state.mainBalls.slice()
     const currIdx = this.state.currIdx
     const currRow = mainBalls[currIdx]
@@ -219,9 +263,26 @@ class Board extends Component {
       }
     }
 
-    this.updateChecker()
-    this.updateRow()
+    const gameOver = this.updateChecker(currIdx)
+    this.updateRow(currIdx, gameOver)
+
+    if (gameOver) {
+      this.revealAnswer()
+      setTimeout(() => alert('Congratulations! You won! :D'), 0)
+      return
+    }
+
+    const nextIdx = currIdx - 1
+    if (nextIdx === -1) {
+      this.revealAnswer()
+      setTimeout(() => alert('You lost! :('), 0)
+      return
+    }
+
+    this.setState({ currIdx: nextIdx })
   }
+
+  // Render Methods
 
   renderRows = () => {
     const rows = []
