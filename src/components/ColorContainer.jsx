@@ -25,13 +25,9 @@ class ColorContainer extends Component {
     return rows
   }
 
-  render = () => {
-    return (
-      <div className='color-container'>
-        {this.renderColorBalls()}
-      </div>
-    )
-  }
+  render = () => <div className='color-container'>
+    {this.renderColorBalls()}
+  </div>
 }
 
 export default ColorContainer

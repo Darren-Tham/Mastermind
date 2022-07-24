@@ -139,42 +139,38 @@ class Board extends Component {
   }
 
   renderAnswerRow = () => <div className='answer-row'>
-        {this.state.answerRow.map(ball => ball)}
-      </div>
+    {this.state.answerRow.map(ball => ball)}
+  </div>
 
   setOptions = () => {
     const options = []
 
-    for (let i = 1; i <= 10; i++) {
+    for (let i = 1; i <= 8; i++) {
       options.push(<option key={i}>{i}</option>)
     }
 
     return options
   }
 
-  render = () => {
-    return (
-      <div className='board'>
-        {this.renderAnswerRow()}
-        {this.renderRows()}
-        <ColorContainer handleColorClick={this.handleColorClick} />
-        <div className='info'>
-          <span>Code Length</span>
-          <select id='select' defaultValue={this.state.codeLen}>
-            {this.setOptions()}
-          </select>
-        </div>
-        <div className='info'>
-          <span>Allow Duplicates</span>
-          <input type='checkbox'></input>
-        </div>
-        <div className='buttons-wrapper'>
-          <button onClick={this.handleNewGameClick}>New Game</button>
-          <button>Check</button>
-        </div>
-      </div>
-    )
-  }
+  render = () => <div className='board'>
+    {this.renderAnswerRow()}
+    {this.renderRows()}
+    <ColorContainer handleColorClick={this.handleColorClick} />
+    <div className='info'>
+      <span>Code Length</span>
+      <select id='select' defaultValue={this.state.codeLen}>
+        {this.setOptions()}
+      </select>
+    </div>
+    <div className='info'>
+      <span>Allow Duplicates</span>
+      <input type='checkbox'></input>
+    </div>
+    <div className='button-container'>
+      <button onClick={this.handleNewGameClick}>New Game</button>
+      <button>Check</button>
+    </div>
+  </div>
 }
 
 export default Board

@@ -17,26 +17,30 @@ class Row extends Component {
       bottomRow.push(checkerBalls[i++])
     }
 
-    return (
-      <div className='checker-container'>
-        <div className='checker-row'>
-          {topRow.map(ball => ball)}
+    if (n === 1) {
+      return (
+        <div className='checker-container-flex'>
+          {topRow[0]}
         </div>
-        <div className='checker-row'>
-          {bottomRow.map(ball => ball)}
+      )
+    } else {
+      return (
+        <div className='checker-container-grid'>
+          <div className='checker-row'>
+            {topRow.map(ball => ball)}
+          </div>
+          <div className='checker-row'>
+            {bottomRow.map(ball => ball)}
+          </div>
         </div>
-      </div>
-    )
+      )
+    }
   }
 
-  render = () => {
-    return (
-      <div className='main-row'>
-        {this.props.mainBalls.map(ball => ball)}
-        {this.renderChecker()}
-      </div>
-    )
-  }
+  render = () => <div className='main-row'>
+    {this.props.mainBalls.map(ball => ball)}
+    {this.renderChecker()}
+  </div>
 }
 
 export default Row
