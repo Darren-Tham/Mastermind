@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import Colors from '../Colors'
 
+const { RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE, WHITE, BLACK } = Colors
+
 class ColorContainer extends Component {
   renderColorBalls = () => {
-    const { RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE, WHITE, BLACK } = Colors
-    const COLORS = [[RED, ORANGE, YELLOW, GREEN], [BLUE, PURPLE, WHITE, BLACK]]
+    const colors = [[RED, ORANGE, YELLOW, GREEN], [BLUE, PURPLE, WHITE, BLACK]]
     const rows = []
 
-    for (let i = 0; i < COLORS.length; i++) {
+    for (let i = 0; i < colors.length; i++) {
       const colorBalls = []
 
-      for (let j = 0; j < COLORS[i].length; j++) {
-        colorBalls.push(<div key={i * COLORS.length + j} className='color-ball' style={{ backgroundColor: COLORS[i][j] }} onClick={this.props.handleColorClick} />)
+      for (let j = 0; j < colors[i].length; j++) {
+        colorBalls.push(<div key={i * colors.length + j} className='color-ball' style={{ backgroundColor: colors[i][j] }} onClick={this.props.handleColorClick} />)
       }
 
       const row = <div key={i} className='color-row'>

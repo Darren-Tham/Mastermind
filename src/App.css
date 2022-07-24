@@ -63,6 +63,7 @@ body {
   justify-content: center;
   align-items: center;
   user-select: none;
+  font-size: 2vmin;
 }
 
 .color-ball {
@@ -98,7 +99,6 @@ body {
 }
 
 .color-container {
-  width: 100%;
   background-color: var(--bg-color);
   display: flex;
   flex-direction: column;
