@@ -59,17 +59,31 @@ export default class Board extends Component {
     this.setState({ mainBalls })
   }
 
+  handleNewGameClick = e => {
+    const select = document.getElementById('select')
+    const codeLen = parseInt(select.value)
+    const rowLen = this.state.rowLen
+    const currIdx = rowLen - 1
+
+    this.setState({
+      codeLen,
+      currIdx,
+      mainBalls: this.setBalls(codeLen, rowLen, currIdx, true),
+      checkerBalls: this.setBalls(codeLen, rowLen, currIdx, false)
+    })
+  }
+
   createMainBall = (key, color, mainColor, handleClick, isClicked, isClickable) => <MainBall key={key} id={key} color={color} mainColor={mainColor} handleClick={handleClick} isClicked={isClicked} isClickable={isClickable} />
 
   createCheckerBall = (key, color) => <CheckerBall key={key} color={color} />
 
-  setBalls = (numOfBalls, numOfRows, currIdx, isMainBalls) => {
+  setBalls = (codeLen, rowLen, currIdx, isMainBalls) => {
     const balls = []
 
-    for (let i = 0; i < numOfRows; i++) {
+    for (let i = 0; i < rowLen; i++) {
       const currBalls = []
 
-      for (let j = 0; j < numOfBalls; j++) {
+      for (let j = 0; j < codeLen; j++) {
         if (isMainBalls) {
           if (i === currIdx) {
             currBalls.push(this.createMainBall(j, GRAY, GRAY, this.handleMainClick, false, true))
@@ -137,7 +151,7 @@ export default class Board extends Component {
         <Colors handleColorClick={this.handleColorClick} />
         <div className='info'>
           <span>Code Length</span>
-          <select defaultValue={this.state.codeLen}>
+          <select id='select' defaultValue={this.state.codeLen}>
             {this.setOptions()}
           </select>
         </div>
@@ -146,7 +160,7 @@ export default class Board extends Component {
           <input type='checkbox'></input>
         </div>
         <div className='buttons-wrapper'>
-          <button>New Game</button>
+          <button onClick={this.handleNewGameClick}>New Game</button>
           <button>Check</button>
         </div>
       </div>
