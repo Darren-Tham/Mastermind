@@ -68,7 +68,7 @@ class Board extends Component {
       const randomColor = colors[randomIdx]
       answerRow.push(this.createMainBall(i, LIGHTER_GRAY, randomColor, null, true, false))
 
-      if (allowDuplicates) {
+      if (!allowDuplicates) {
         colors = colors.slice(0, randomIdx).concat(colors.slice(randomIdx + 1))
       }
     }
