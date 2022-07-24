@@ -10,11 +10,6 @@ const WHITE = '#f9f5ff'
 const BLACK = '#262626'
 
 export default class Colors extends Component {
-  constructor(props) {
-    super(props)
-    this.props = props
-  }
-
   renderColorBalls = () => {
     const COLORS = [[RED, ORANGE, YELLOW, GREEN], [BLUE, PURPLE, WHITE, BLACK]]
     const rows = []

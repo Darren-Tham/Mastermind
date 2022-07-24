@@ -95,7 +95,7 @@ export default class Board extends Component {
     const rows = []
 
     for (let i = 0; i < this.state.numOfRows; i++) {
-      rows.push(<Row key={i} mainBalls={this.state.mainBalls[i]} checkerBalls={this.state.checkerBalls[i]} ballsPerRow={this.state.numOfBalls / 2} />)
+      rows.push(<Row key={i} mainBalls={this.state.mainBalls[i]} checkerBalls={this.state.checkerBalls[i]} numOfBalls={this.state.numOfBalls} />)
     }
 
     return (

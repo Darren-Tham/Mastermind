@@ -67,9 +67,15 @@ body {
   margin: 0 0.5vmin;
 }
 
+.checker-row {
+  display: flex;
+  justify-content: space-evenly
+}
+
 .checker-container {
   height: calc(var(--ball-size) + var(--ball-margin) * 2);
   display: grid;
+  grid-template-rows: repeat(2, 1fr);
   place-items: center;
   border-left: var(--border);
 }
