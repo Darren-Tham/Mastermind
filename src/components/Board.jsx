@@ -112,15 +112,20 @@ class Board extends Component {
 
   handleNewGameClick = () => {
     const select = document.getElementById('select')
+    const checkbox = document.getElementById('checkbox')
+
     const codeLen = parseInt(select.value)
     const rowLen = this.state.rowLen
     const currIdx = rowLen - 1
+    const allowDuplicates = checkbox.checked
 
     this.setState({
       codeLen,
       currIdx,
+      allowDuplicates,
       mainBalls: this.setBalls(codeLen, rowLen, currIdx, true),
-      checkerBalls: this.setBalls(codeLen, rowLen, currIdx, false)
+      checkerBalls: this.setBalls(codeLen, rowLen, currIdx, false),
+      answerRow: this.setAnswer(codeLen, allowDuplicates)
     })
   }
 
@@ -164,7 +169,7 @@ class Board extends Component {
     </div>
     <div className='info'>
       <span>Allow Duplicates</span>
-      <input type='checkbox'></input>
+      <input id='checkbox' type='checkbox'></input>
     </div>
     <div className='button-container'>
       <button onClick={this.handleNewGameClick}>New Game</button>
