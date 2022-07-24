@@ -99,7 +99,7 @@ export default class Board extends Component {
     }
 
     return (
-      <div>
+      <div className='main-container'>
         {rows.map(row => row)}
       </div>
     )
