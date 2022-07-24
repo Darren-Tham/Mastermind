@@ -9,6 +9,7 @@
   --gray: #797d80;
   --bg-color: #ced3d9;
   --border: 0.2vmin solid var(--gray);
+  --spacing: 2vmin;
 }
 
 body {
@@ -96,19 +97,49 @@ body {
   background-color: #b8bcbf;
 }
 
-.colors-wrapper {
+.colors-container {
   width: 100%;
   background-color: var(--bg-color);
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2vmin 0;
+  padding: var(--spacing) 0;
   border-top: var(--border);
+}
+
+.info {
+  background-color: var(--bg-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: var(--spacing);
+  font-size: 2vmin;
+}
+
+input {
+  width: 2.25vmin;
+  height: 2.25vmin;
+}
+
+select {
+  margin-left: 1vmin;
+  width: max-content;
+  height: 2.75vmin;
+  text-align: center;
+  border-radius: 1vmin;
+  font-size: 1.75vmin;
+}
+
+button {
+  width: max-content;
+  height: 3vmin;
+  padding: 0 0.5vmin;
+  font-size: 1.75vmin;
 }
 
 .buttons-wrapper {
   background-color: var(--bg-color);
   display: flex;
   justify-content: space-evenly;
+  padding-bottom: var(--ball-margin);
 }
-

@@ -33,7 +33,7 @@ export default class Colors extends Component {
 
   render = () => {
     return (
-      <div className='colors-wrapper'>
+      <div className='colors-container'>
         {this.renderColorBalls()}
       </div>
     )

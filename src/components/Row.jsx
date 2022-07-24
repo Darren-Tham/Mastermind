@@ -4,7 +4,7 @@ export default class Row extends Component {
 
   renderChecker = () => {
     const checkerBalls = this.props.checkerBalls.slice()
-    const n = this.props.numOfBalls
+    const n = this.props.codeLen
     const topRow = []
     const bottomRow = []
 

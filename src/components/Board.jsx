@@ -12,16 +12,16 @@ export default class Board extends Component {
   constructor(props) {
     super(props)
 
-    const numOfBalls = 4
-    const numOfRows = 10
-    const currIdx = numOfRows - 1
+    const codeLen = 4
+    const rowLen = 10
+    const currIdx = rowLen - 1
 
     this.state = {
-      numOfBalls,
-      numOfRows,
+      codeLen,
+      rowLen,
       currIdx,
-      mainBalls: this.setBalls(numOfBalls, numOfRows, currIdx, true),
-      checkerBalls: this.setBalls(numOfBalls, numOfRows, currIdx, false)
+      mainBalls: this.setBalls(codeLen, rowLen, currIdx, true),
+      checkerBalls: this.setBalls(codeLen, rowLen, currIdx, false)
     }
   }
 
@@ -94,8 +94,8 @@ export default class Board extends Component {
   renderRows = () => {
     const rows = []
 
-    for (let i = 0; i < this.state.numOfRows; i++) {
-      rows.push(<Row key={i} mainBalls={this.state.mainBalls[i]} checkerBalls={this.state.checkerBalls[i]} numOfBalls={this.state.numOfBalls} />)
+    for (let i = 0; i < this.state.rowLen; i++) {
+      rows.push(<Row key={i} mainBalls={this.state.mainBalls[i]} checkerBalls={this.state.checkerBalls[i]} codeLen={this.state.codeLen} />)
     }
 
     return (
@@ -108,7 +108,7 @@ export default class Board extends Component {
   renderAnswerRow = () => {
     const balls = []
 
-    for (let i = 0; i < this.state.numOfBalls; i++) {
+    for (let i = 0; i < this.state.codeLen; i++) {
       balls.push(this.createMainBall(i, LIGHTER_GRAY, LIGHTER_GRAY, null, true, false))
     }
 
@@ -119,12 +119,32 @@ export default class Board extends Component {
     )
   }
 
+  setOptions = () => {
+    const options = []
+
+    for (let i = 1; i <= 10; i++) {
+      options.push(<option key={i}>{i}</option>)
+    }
+
+    return options
+  }
+
   render = () => {
     return (
       <div className='board'>
         {this.renderAnswerRow()}
         {this.renderRows()}
         <Colors handleColorClick={this.handleColorClick} />
+        <div className='info'>
+          <span>Code Length</span>
+          <select defaultValue={this.state.codeLen}>
+            {this.setOptions()}
+          </select>
+        </div>
+        <div className='info'>
+          <span>Allow Duplicate</span>
+          <input type='checkbox'></input>
+        </div>
         <div className='buttons-wrapper'>
           <button>New Game</button>
           <button>Check</button>
