@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
+import Colors from '../Colors'
 import Row from './Row'
-import Colors from './Colors'
+import ColorContainer from './ColorContainer'
 import MainBall from './MainBall'
 import CheckerBall from './CheckerBall'
 
-const GRAY = '#797d80'
-const LIGHT_GRAY = '#989c9e'
-const LIGHTER_GRAY = '#b8bcbf'
-
-export default class Board extends Component {
+class Board extends Component {
   constructor(props) {
     super(props)
 
@@ -21,7 +18,8 @@ export default class Board extends Component {
       rowLen,
       currIdx,
       mainBalls: this.setBalls(codeLen, rowLen, currIdx, true),
-      checkerBalls: this.setBalls(codeLen, rowLen, currIdx, false)
+      checkerBalls: this.setBalls(codeLen, rowLen, currIdx, false),
+      allowDuplicates: false
     }
   }
 
@@ -34,7 +32,7 @@ export default class Board extends Component {
     const newRow = currRow.map((ball, i) => {
       const mainColor = ball.props.mainColor
       if (id === i && !isClicked) {
-        return this.createMainBall(i, LIGHT_GRAY, mainColor, this.handleMainClick, true, true)
+        return this.createMainBall(i, Colors.LIGHT_GRAY, mainColor, this.handleMainClick, true, true)
       } else {
         return this.createMainBall(i, mainColor, mainColor, this.handleMainClick, false, true)
       }
@@ -59,7 +57,7 @@ export default class Board extends Component {
     this.setState({ mainBalls })
   }
 
-  handleNewGameClick = e => {
+  handleNewGameClick = () => {
     const select = document.getElementById('select')
     const codeLen = parseInt(select.value)
     const rowLen = this.state.rowLen
@@ -86,15 +84,15 @@ export default class Board extends Component {
       for (let j = 0; j < codeLen; j++) {
         if (isMainBalls) {
           if (i === currIdx) {
-            currBalls.push(this.createMainBall(j, GRAY, GRAY, this.handleMainClick, false, true))
+            currBalls.push(this.createMainBall(j, Colors.GRAY, Colors.GRAY, this.handleMainClick, false, true))
           } else {
-            currBalls.push(this.createMainBall(j, LIGHTER_GRAY, LIGHTER_GRAY, null, false, false))
+            currBalls.push(this.createMainBall(j, Colors.LIGHTER_GRAY, Colors.LIGHTER_GRAY, null, false, false))
           }
         } else {
           if (i === currIdx) {
-            currBalls.push(this.createCheckerBall(j, GRAY))
+            currBalls.push(this.createCheckerBall(j, Colors.GRAY))
           } else {
-            currBalls.push(this.createCheckerBall(j, LIGHTER_GRAY))
+            currBalls.push(this.createCheckerBall(j, Colors.LIGHTER_GRAY))
           }
         }
       }
@@ -123,7 +121,7 @@ export default class Board extends Component {
     const balls = []
 
     for (let i = 0; i < this.state.codeLen; i++) {
-      balls.push(this.createMainBall(i, LIGHTER_GRAY, LIGHTER_GRAY, null, true, false))
+      balls.push(this.createMainBall(i, Colors.LIGHTER_GRAY, Colors.LIGHTER_GRAY, null, true, false))
     }
 
     return (
@@ -148,7 +146,7 @@ export default class Board extends Component {
       <div className='board'>
         {this.renderAnswerRow()}
         {this.renderRows()}
-        <Colors handleColorClick={this.handleColorClick} />
+        <ColorContainer handleColorClick={this.handleColorClick} />
         <div className='info'>
           <span>Code Length</span>
           <select id='select' defaultValue={this.state.codeLen}>
@@ -156,7 +154,7 @@ export default class Board extends Component {
           </select>
         </div>
         <div className='info'>
-          <span>Allow Duplicate</span>
+          <span>Allow Duplicates</span>
           <input type='checkbox'></input>
         </div>
         <div className='buttons-wrapper'>
@@ -167,3 +165,5 @@ export default class Board extends Component {
     )
   }
 }
+
+export default Board

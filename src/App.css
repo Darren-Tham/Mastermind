@@ -89,7 +89,7 @@ body {
   border-left: var(--border);
 }
 
-.colors-row {
+.color-row {
   width: max-content;
   display: flex;
   justify-content: center;
@@ -97,7 +97,7 @@ body {
   background-color: #b8bcbf;
 }
 
-.colors-container {
+.color-container {
   width: 100%;
   background-color: var(--bg-color);
   display: flex;

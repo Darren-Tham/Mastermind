@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export default class Row extends Component {
+class Row extends Component {
 
   renderChecker = () => {
     const checkerBalls = this.props.checkerBalls.slice()
@@ -38,3 +38,5 @@ export default class Row extends Component {
     )
   }
 }
+
+export default Row

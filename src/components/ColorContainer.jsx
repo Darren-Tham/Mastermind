@@ -1,16 +1,9 @@
 import React, { Component } from 'react';
+import Colors from '../Colors'
 
-const RED = '#ff9e9e'
-const ORANGE = '#ffdb94'
-const YELLOW = '#fbffb5'
-const GREEN = '#baffb8'
-const BLUE = '#addeff'
-const PURPLE = '#d6bdff'
-const WHITE = '#f9f5ff'
-const BLACK = '#262626'
-
-export default class Colors extends Component {
+class ColorContainer extends Component {
   renderColorBalls = () => {
+    const { RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE, WHITE, BLACK } = Colors
     const COLORS = [[RED, ORANGE, YELLOW, GREEN], [BLUE, PURPLE, WHITE, BLACK]]
     const rows = []
 
@@ -21,7 +14,7 @@ export default class Colors extends Component {
         colorBalls.push(<div key={i * COLORS.length + j} className='color-ball' style={{ backgroundColor: COLORS[i][j] }} onClick={this.props.handleColorClick} />)
       }
 
-      const row = <div key={i} className='colors-row'>
+      const row = <div key={i} className='color-row'>
         {colorBalls.map(ball => ball)}
       </div>
 
@@ -33,9 +26,11 @@ export default class Colors extends Component {
 
   render = () => {
     return (
-      <div className='colors-container'>
+      <div className='color-container'>
         {this.renderColorBalls()}
       </div>
     )
   }
 }
+
+export default ColorContainer

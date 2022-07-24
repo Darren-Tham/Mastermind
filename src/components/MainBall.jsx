@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function MainBall(props) {
+const MainBall = props => {
   const content = props.isClicked ? '?' : ''
   const cursor = props.isClickable ? 'pointer' : 'default'
 
@@ -13,3 +13,5 @@ export default function MainBall(props) {
     <div id={props.id} className='main-ball' style={style} onClick={props.handleClick}>{content}</div>
   )
 }
+
+export default MainBall
