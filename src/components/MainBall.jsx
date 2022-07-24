@@ -10,6 +10,6 @@ export default function MainBall(props) {
   }
 
   return (
-    <div id={props.id} className='main ball' style={style} onClick={props.handleClick}>{content}</div>
+    <div id={props.id} className='main-ball' style={style} onClick={props.handleClick}>{content}</div>
   )
 }

@@ -93,16 +93,37 @@ export default class Board extends Component {
 
   renderRows = () => {
     const rows = []
+
     for (let i = 0; i < this.state.numOfRows; i++) {
       rows.push(<Row key={i} mainBalls={this.state.mainBalls[i]} checkerBalls={this.state.checkerBalls[i]} ballsPerRow={this.state.numOfBalls / 2} />)
     }
-    return rows
+
+    return (
+      <div>
+        {rows.map(row => row)}
+      </div>
+    )
+  }
+
+  renderAnswerRow = () => {
+    const balls = []
+
+    for (let i = 0; i < this.state.numOfBalls; i++) {
+      balls.push(this.createMainBall(i, LIGHTER_GRAY, LIGHTER_GRAY, null, true, false))
+    }
+
+    return (
+      <div className='answer-row'>
+        {balls.map(ball => ball)}
+      </div>
+    )
   }
 
   render = () => {
     return (
       <div className='board'>
-        {this.renderRows().map(row => row)}
+        {this.renderAnswerRow()}
+        {this.renderRows()}
         <Colors handleColorClick={this.handleColorClick} />
         <div className='buttons-wrapper'>
           <button>New Game</button>

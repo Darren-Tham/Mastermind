@@ -12,6 +12,7 @@ const BLACK = '#262626'
 export default class Colors extends Component {
   constructor(props) {
     super(props)
+    this.props = props
   }
 
   renderColorBalls = () => {
@@ -22,7 +23,7 @@ export default class Colors extends Component {
       const colorBalls = []
 
       for (let j = 0; j < COLORS[i].length; j++) {
-        colorBalls.push(<div key={i * COLORS.length + j} className='color ball' style={{ backgroundColor: COLORS[i][j] }} onClick={this.props.handleColorClick} />)
+        colorBalls.push(<div key={i * COLORS.length + j} className='color-ball' style={{ backgroundColor: COLORS[i][j] }} onClick={this.props.handleColorClick} />)
       }
 
       const row = <div key={i} className='colors-row'>
