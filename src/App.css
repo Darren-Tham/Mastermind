@@ -4,7 +4,7 @@
 }
 
 :root {
-  --ball-size: 30px;
+  --ball-size: 27.5px;
   --ball-margin: 5px;
   --gray: #797d80;
   --bg-color: #ced3d9;
@@ -126,17 +126,17 @@ body {
 }
 
 input {
-  width: 20px;
-  height: 20px;
+  width: 17.5px;
+  height: 17.5px;
 }
 
 select {
   margin-left: 10px;
   width: max-content;
-  height: 25px;
+  height: 20px;
   text-align: center;
   border-radius: 7.5px;
-  font-size: 15px;
+  font-size: 12.5px;
 }
 
 button {
