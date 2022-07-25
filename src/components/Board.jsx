@@ -244,7 +244,7 @@ class Board extends Component {
     })
   }
 
-  handleCheck = _ => {
+  handleCheck = async _ => {
     if (this.state.gameOver) return
 
     const mainBalls = this.state.mainBalls.slice()
@@ -268,14 +268,16 @@ class Board extends Component {
 
     if (gameOver) {
       this.revealAnswer()
-      setTimeout(() => alert('Congratulations! You won! :D'), 0)
+      await new Promise(res => setTimeout(res, 1))
+      alert('Congratulations! You won! :D')
       return
     }
 
     const nextIdx = currIdx - 1
     if (nextIdx === -1) {
       this.revealAnswer()
-      setTimeout(() => alert('You lost! :('), 0)
+      await new Promise(res => setTimeout(res, 1))
+      alert('You lost! :(')
       return
     }
 
